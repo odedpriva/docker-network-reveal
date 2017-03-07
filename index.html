@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="http://www.simplifycorp.com/images/pageimages/img_deepdive_header.jpg">
+					<h1>docker networking deepdive</h1>
+					<p>Created by Oded Priva</p>
+				</section>
+				<section>
+					<section data-markdown>
+						<script type="text/template">
+							### Workshop Descriptions
+							- Docker has revolutionized virtualization by abstracting some ~15 years old Kernel tools.
+							- Along the way they have been using some basic linux networking tools ( and now windows ) that enabled container networking.
+							- This workshop will introduce general networking concepts, tools and docker specific networking model and its implementation.
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							### Participants Will
+							1. Understand basic networking concepts by using various tools such as `tcpdump`, `ip` etc.
+							2. Understand the [CNM](https://github.com/docker/libnetwork/blob/master/docs/design.md#the-container-network-model).
+							3. Understand single host container networking and multi-host container networking
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							### Workshop agenda
+							#### Part 1 - 90 minutes
+
+							- linux networking:
+							- Networking models.
+							- NIC
+							- Routing
+							- iptables
+							- namespace and linux bridge
+							- name resolution
+							- ipvs
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							### Workshop agenda
+							#### Part 2 - 90 minutes
+
+							- docker network background:
+							- history
+							- components
+							- docker network subcommand.
+							- docker network drivers:
+							- bridge
+							- overlay
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							### Who this workshop is for
+
+							- This workshop is targeted at users who already know the basics of Docker and linux networking,
+							That want to know how the **magic** of container networking works under-the-hood
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							### Knowledge Prerequisites
+							- Participants are expected to have experience with docker.
+							- Although I will try to cover all that is needed from networking POV, participants who have basic knowledge in the OSI or TCP/IP model, will find the workshop much easier to follow.
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							### Hardware Prerequisites
+							- This workshop was built on MAC Sierra, with Docker 1.12 ( tested on 1.13 ).
+							- Other OS ( Windows, Ubuntu etc .. ) could also benefit from both part of the Workshop but some commands will just not work.
+						</script>
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						<script type="text/template">
+							linux networking
+							---
+
+							### Participants Will
+
+							- Build the `lab` that will be used throughout this workshop.
+							- Refreshes and gain new knowledge on core Linux concepts that provide a foundation for 2nd part, such as TCP/IP, OSI, name resolution, `ip` command and other tools.
+						</script>
+					</section>
+					<section data-background-image="http://online.thatsmags.com/uploads/content/1404/3615/breaking-bad-lab.jpg">
+						<h1>let't build the lab</h1>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							Through out this part we will use 3 docker images that are all based on [alpine](https://alpinelinux.org/) linux distro.
+							- **networking** : image that include networking tools such as tcpdump, dig, curl, etc.
+							- **proxy** : `node.js` basic server that forwards request to the server application
+							- **server** : `node.js` basic server, that returns host name.
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							clone the git repository
+							``` shell
+							https://github.com/odedpriva/docker-networking-workshop.git
+
+							```
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							Build the images using
+							``` shell
+							cd docker-networking-workshop/workshop-images
+							for i in $(ls); do cd $i; docker build -t $i . ; cd .. ; done
+
+							```
+						</script>
+					</section>
+					<section>
+						<h2>What do we have now?</h2>
+						<img data-src="https://docs.google.com/drawings/d/112zPkz0yGVgSKYgei2pNBTYxtPAo9VG9RlDs5Efqyic/pub?w=945&h=532">
+						<aside class="notes">
+							* Docker for Mac does not use VirtualBox, but rather HyperKit, a lightweight macOS virtualization solution built on top of Hypervisor.framework in macOS 10.10 Yosemite and higher
+							* At installation time, Docker for Mac provisions an HyperKit VM based on Alpine Linux, running Docker Engine. It exposes the docker API on a socket in /var/run/docker.sock.
+						</aside>
+					</section>
+					<section data-markdown align="left">
+						<script type="text/template">
+							To check under-the-hood of ***docker-for-mac*** we will use [nsenter](http://man7.org/linux/man-pages/man1/nsenter.1.html)
+							that is available in the networking image we just built.
+
+							run this command:
+
+							docker run -it --privileged --pid=host networking nsenter -t 1 -n sh -c "ip link"
+
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							let's create an alias to make our life easier:
+
+							alias docker-for-mac='docker run -it --privileged --pid=host networking nsenter -t 1 -n sh -c'
+						</script>
+						<aside class="notes">
+							**bonus question:** What is the `veth***@if***` ?
+						</aside>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
