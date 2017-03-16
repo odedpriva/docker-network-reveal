@@ -260,9 +260,33 @@
 					</section>
 					<section>
 						<h3>now, lets send it to grayscale </h3>
-						<div style="position:relative; width:1037px; height:284px; margin:0 auto;">
-							<img class="plain fragment"  width="1037" height="284" src="https://docs.google.com/drawings/d/1_BG6oo5TnGIkxr9W9b1bjqtNEycYM9RntiXJrznDyWk/pub?w=1037&h=284" style="position:absolute;top:0;left:0;" />
+						<div style="position:relative; width:1187px; height:325px; margin:0 auto;">
+							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1vIniMC2WCmVeJHAnlCWIDulLjYhmzNgqdDYkW0jKz8g/pub?w=1187&h=325" alt="grayscale #1" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1PihuNLY7QkVoapaCaqeb0ktEcV4pYaKr51DTfoZKobc/pub?w=1187&h=325" alt="grayscale #2" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1HiDqB3l7l-ZczLBrNtjfm5RB0RAdjDbdr-9gCCrctE4/pub?w=1187&h=325" alt="grayscale #3" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1_Bd7IgzbTxumv6ZWy5pkhsY0l4A3e6tSr6o5Gnhz__4/pub?w=1187&h=325" alt="grayscale #4" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1-ZFfhmfa1BOP7lyT6yp5YsfdiyL8FyuRz1wPi6NtyJg/pub?w=1187&h=325" alt="grayscale #5" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1S0f6-6_dyFdzWjDQYNRKamgrQNQ7qVuen14CCpGXak8/pub?w=1187&h=325" alt="grayscale #6" style="position:absolute;top:0;left:0;" />
 						</div>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							|   |                              Sending a packet to different network.           |
+							|:-:|:------------------------------------------------------------------------------|
+							| 1 | determine if the destination IP address is itself by consulting the **routing table** |
+							| 2 | broadcast an **ARP** request for default GW MAC address |
+							| 3 | sends the packet to default GW |
+							| 4 | default GW parse its own routing table for a route to the destination network |
+							| 5 | broadcasts an ARP request |
+							| 6 | construct a Layer-2 frame, with a destination MAC address |
+						</script>
+					</section>
+					<section>
+						<h3>let's get our hands dirty</h3>
+						<img class="plain" src="images/test.png">
+					</section>
+					<section>
+						<iframe data-src="https://github.com/odedpriva/docker-networking-workshop/tree/master/linux-networking/03-arp-and-routing#local-jirs-issue--from-ironsource-network" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 					</section>
                 </section>
 			</div>

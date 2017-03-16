@@ -242,6 +242,7 @@ body {
 
 .reveal section img.plain {
   border: 0;
+  background: rgba(255, 255, 255, 0);
   box-shadow: none; }
 
 .reveal a img {
