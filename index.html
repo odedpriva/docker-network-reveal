@@ -28,7 +28,7 @@
 					<h1>docker networking deepdive</h1>
 					<p>Created by Oded Priva</p>
 				</section>
-				<section>
+				<section about="WORKSHOP DESCRIPTIONS">
 					<section data-markdown>
 						<script type="text/template">
 							### Workshop Descriptions
@@ -97,7 +97,7 @@
 						</script>
 					</section>
 				</section>
-				<section>
+				<section about="BUILDING THE LAB">
 					<section data-markdown>
 						<script type="text/template">
 							linux networking
@@ -114,62 +114,19 @@
 					</section>
 					<section data-markdown>
 						<script type="text/template">
-							Through out this part we will use 3 docker images that are all based on [alpine](https://alpinelinux.org/) linux distro.
-							- **networking** : image that include networking tools such as tcpdump, dig, curl, etc.
-							- **proxy** : `node.js` basic server that forwards request to the server application
-							- **server** : `node.js` basic server, that returns host name.
-						</script>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							Clone the git repository
+							CLONE ME
 							``` shell
 							https://github.com/odedpriva/docker-networking-workshop.git
 
 							```
 						</script>
 					</section>
-					<section data-markdown>
-						<script type="text/template">
-							Build the images using
-							``` shell
-							cd docker-networking-workshop/workshop-images
-							for i in $(ls); do cd $i; docker build -t $i . ; cd .. ; done
-
-							```
-						</script>
-					</section>
-					<section>
-						<h2>What do we have now?</h2>
-						<img data-src="https://docs.google.com/drawings/d/112zPkz0yGVgSKYgei2pNBTYxtPAo9VG9RlDs5Efqyic/pub?w=945&h=532">
-						<aside class="notes">
-							* Docker for Mac does not use VirtualBox, but rather HyperKit, a lightweight macOS virtualization solution built on top of Hypervisor.framework in macOS 10.10 Yosemite and higher
-							* At installation time, Docker for Mac provisions an HyperKit VM based on Alpine Linux, running Docker Engine. It exposes the docker API on a socket in /var/run/docker.sock.
-						</aside>
-					</section>
-					<section data-markdown align="left">
-						<script type="text/template">
-							To check under-the-hood of ***docker-for-mac*** we will use [nsenter](http://man7.org/linux/man-pages/man1/nsenter.1.html)
-							that is available in the networking image we just built.
-
-							run this command:
-
-							docker run -it --privileged --pid=host networking nsenter -t 1 -n sh -c "ip link"
-
-						</script>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							let's create an alias to make our life easier:
-
-							alias docker-for-mac='docker run -it --privileged --pid=host networking nsenter -t 1 -n sh -c'
-						</script>
-						<aside class="notes">
-							**bonus question:** What is the `veth***@if***` ?
-						</aside>
-					</section>
+                    <section>
+                        <h3>hands on</h3>
+                        <img class="plain" src="https://docs.google.com/drawings/d/14puhXS-FOWePChsCrKhpj07ScQxbLmS6KE17hLfe8d8/pub?w=450&h=450">
+                    </section>
 				</section>
-				<section>
+				<section about="NETWORKING MODELS">
 					<section data-markdown>
 						<script type="text/template">
 							Networking models
@@ -226,7 +183,7 @@
                         <img class="plain" src="https://docs.google.com/drawings/d/1Gr_4a7kMwr1o619jwChy8ZW9lV66d_TwX4-lBnHydKE/pub?w=1002&h=504" border="0">
                     </section>
 				</section>
-                <section>
+                <section about="NETWORK ROUTING" >
                     <section>
                         <h3>How network routing works ? <br> OR,<br> let's send a letter.</h3>
 						<img src="https://docs.google.com/drawings/d/1xWUVDkYSqAvgfHz7qn6bATnH2wuv7ITrl2Ek_55IK_c/pub?w=425&h=235" />
@@ -236,11 +193,11 @@
 							meet sepia hills
 						</h3>
 						<div style="position:relative; width:857px; height:483px; margin:0 auto;">
-							<img class="fragment" width="857" height="483" src="https://docs.google.com/drawings/d/1GJHvoV28gIVbpUPW1bliYRBPXI1c3KbENIuLk5EXPG8/pub?w=857&h=483" style="position:absolute;top:0;left:0;" />
-							<img class="fragment" width="857" height="483" src="https://docs.google.com/drawings/d/1DWNu3gkRaZgi50nKqmvnc2TpDxU4ePW0lV9BsM_PMbU/pub?w=857&h=483" style="position:absolute;top:0;left:0;" />
-							<img class="fragment" width="857" height="483" src="https://docs.google.com/drawings/d/1NvAPBRH8JT6VkTEURqOFUbkLvqhTwZlz-CQHqXUjWvI/pub?w=857&h=483" style="position:absolute;top:0;left:0;" />
-							<img class="fragment" width="857" height="483" src="https://docs.google.com/drawings/d/1ineMxRqLx6tJEwoQr3EheGC7aymv-Qq2gVEARldVEbY/pub?w=857&h=483" style="position:absolute;top:0;left:0;" />
-							<img class="fragment" width="857" height="483" src="https://docs.google.com/drawings/d/1uUxnvyLdqXIrYbHJMRHN2Bs8FUPQiBNzi6H7qRPCMNI/pub?w=857&h=483" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment" width="857" height="483" src="./images/se1.png" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment" width="857" height="483" src="./images/se2.png" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment" width="857" height="483" src="./images/se3.png" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment" width="857" height="483" src="./images/se4.png" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment" width="857" height="483" src="./images/se5.png" style="position:absolute;top:0;left:0;" />
 						</div>
 					</section>
 					<section data-markdown>
@@ -259,14 +216,16 @@
 						<img src="https://docs.google.com/drawings/d/19Bm4TeL2fJp__7d9BWA_zbjJ6_hD7MPEjrv1zok1YdY/pub?w=425&h=235" />
 					</section>
 					<section>
-						<h3>now, lets send it to grayscale </h3>
-						<div style="position:relative; width:1187px; height:325px; margin:0 auto;">
-							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1vIniMC2WCmVeJHAnlCWIDulLjYhmzNgqdDYkW0jKz8g/pub?w=1187&h=325" alt="grayscale #1" style="position:absolute;top:0;left:0;" />
-							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1PihuNLY7QkVoapaCaqeb0ktEcV4pYaKr51DTfoZKobc/pub?w=1187&h=325" alt="grayscale #2" style="position:absolute;top:0;left:0;" />
-							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1HiDqB3l7l-ZczLBrNtjfm5RB0RAdjDbdr-9gCCrctE4/pub?w=1187&h=325" alt="grayscale #3" style="position:absolute;top:0;left:0;" />
-							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1_Bd7IgzbTxumv6ZWy5pkhsY0l4A3e6tSr6o5Gnhz__4/pub?w=1187&h=325" alt="grayscale #4" style="position:absolute;top:0;left:0;" />
-							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1-ZFfhmfa1BOP7lyT6yp5YsfdiyL8FyuRz1wPi6NtyJg/pub?w=1187&h=325" alt="grayscale #5" style="position:absolute;top:0;left:0;" />
-							<img class="plain fragment"  width="1187" height="325" src="https://docs.google.com/drawings/d/1S0f6-6_dyFdzWjDQYNRKamgrQNQ7qVuen14CCpGXak8/pub?w=1187&h=325" alt="grayscale #6" style="position:absolute;top:0;left:0;" />
+						<h3>
+                            now, lets send it to grayscale
+                        </h3>
+						<div style="position:relative; width:1187px; height:400px; margin:0 auto;">
+							<img class="plain fragment"  width="1187" height="325" src="./images/gs1.png" alt="grayscale #1" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment"  width="1187" height="325" src="./images/gs2.png" alt="grayscale #2" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment"  width="1187" height="325" src="./images/gs3.png" alt="grayscale #3" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment"  width="1187" height="325" src="./images/gs4.png" alt="grayscale #4" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment"  width="1187" height="325" src="./images/gs5.png" alt="grayscale #5" style="position:absolute;top:0;left:0;" />
+							<img class="plain fragment"  width="1187" height="325" src="./images/gs6.png" alt="grayscale #6" style="position:absolute;top:0;left:0;" />
 						</div>
 					</section>
 					<section data-markdown>
@@ -281,10 +240,10 @@
 							| 6 | construct a Layer-2 frame, with a destination MAC address |
 						</script>
 					</section>
-					<section>
-						<h3>let's get our hands dirty</h3>
-						<img class="plain" src="images/test.png">
-					</section>
+                    <section>
+                        <h3>hands on</h3>
+                        <img class="plain" src="https://docs.google.com/drawings/d/14puhXS-FOWePChsCrKhpj07ScQxbLmS6KE17hLfe8d8/pub?w=450&h=450">
+                    </section>
 					<section>
 						<iframe data-src="https://github.com/odedpriva/docker-networking-workshop/tree/master/linux-networking/03-arp-and-routing#local-jirs-issue--from-ironsource-network" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 					</section>
@@ -299,6 +258,8 @@
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				history: true,
+              controls: false,
+              viewDistance: 10,
 
 				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
